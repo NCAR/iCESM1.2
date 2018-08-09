@@ -1,0 +1,1 @@
+./xmlchange CLM_CONFIG_OPTS="-phys clm4_5 -bgc cn -vsoilc_centbgc no-vert -clm4me on"

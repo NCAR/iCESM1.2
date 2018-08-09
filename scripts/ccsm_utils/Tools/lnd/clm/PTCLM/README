@@ -1,0 +1,87 @@
+scripts/ccsm_utils/Tools/lnd/clm/PTCLM/README                09/29/2013
+
+PTCLM is a python tool built on top of CESM1.2 for running CLM "I" cases
+for supported single-point grids, and for data from Ameriflux Tower-sites,
+or other user-supplied single-point datasets.
+
+Original Authors:
+
+Daniel M. Ricciuto, Dali Wang, Peter E. Thornton, Wilfred M. Post
+
+Environmental Sciences Division, Oak Ridge National Laboratory (ORNL)
+
+R. Quinn Thomas
+
+Cornell University
+
+Modified by:
+
+Erik Kluzek (NCAR)
+
+General Directory structure:
+
+  scripts/ccsm_utils/Tools/lnd/clm/PTCLM/PTCLM.py -------- Main script
+  scripts/ccsm_utils/Tools/lnd/clm/PTCLM/buildtools ------ Script to build tools
+        needed to run PTCLM.
+  scripts/ccsm_utils/Tools/lnd/clm/PTCLM/PTCLM_sitedata  - Site data files of 
+        static information latitude, longitude, soil info., and PFT information 
+        for each site Also different "groups" of site-data lists, and the script to
+        convert the transient years pftdyn files into pftdyn text files that
+        mksurfdata can use.
+
+Quickstart:
+
+# ASSUMPTIONS:
+# For this example I'm running the default ICLM451PT case on yellowstone using  
+# CSMDATA in the standard location
+# For our case we will set MYCSMDATA=$HOME/inputdata (change as needed)
+# Finally we use the 6-digit AmeriFlux site code for the University of Mich. Biological
+# Station US-UMB (data for this station is checked into the inputdata repository).
+# I also assume you are using UNIX C-shell, and GNU make is called gmake
+setenv CSMDATA   /glade/p/cesm/cseg/inputdata
+setenv MYCSMDATA $HOME/inputdata
+setenv SITE      US-UMB
+
+# First link the standard input files to a location you have write access
+cd scripts
+./link_dirtree $CSMDATA $MYCSMDATA
+
+# Next build all of the clm tools you will need
+# You can do this by running gmake in their src directories.
+# NOTE: you do need to "gmake clean" between the builds
+# On yellowstone, you can use the script "buildtools" to build them
+# (submit the build to geyser using "execgy")
+execgy ./buildtools >& buildtools.out &
+
+# Next copy the towersite meterology datafiles into your $MYCSMDATA space
+# (For the US-UMB station you can skip this step as the .build step will bring the data over)
+
+cd $MYCSMDATA/atm/datm7/CLM1PT_data
+mkdir 1x1pt_$SITE
+# Copy meteorology data NetCDF files into 1x1pt_$SITE sub-directory 
+# (with filenames of yyyy-mm.nc)
+# The variables assumed to be on the files are: 
+#     ZBOT, TBOT, RH, WIND, PRECTmms, FSDS, PSRF, FLDS
+# (if other fields are available or with different names this can be changed by
+#  editing the streams file created after PTCLM.py is run)
+
+# MAKE SURE python AND NCL IS IN YOUR PATH (yellowstone requires the following module loads)
+module load ncl python
+
+# next run PTCLM
+# (submit to geyser using "execgy", because it requires 83 GBytes of memory to run))
+cd ../../../../scripts/ccsm_utils/Tools/lnd/clm/PTCLM
+setenv MYCASE "testPTCLM"
+execgy ./PTCLM.py -m yellowstone_intel --case=$MYCASE --site=$SITE \
+--csmdata=$MYCSMDATA >& $SITE.out &
+# NOTE: ON yellowstone YOU WILL NEED TO SUBMIT THE ABOVE INTO THE BATCH QUEUE USING THE "execca" COMMAND.
+# This is because yellowstone now kills resource intensive jobs (taking a lot of memory or CPU), such
+# as when PTCLM creates mapping files or surface datasets (resources are limited when --nopointdfata is used).
+# As in something like this...
+#> execca ./PTCLM.py -m $MYMACH  --case=$MYCASE --site=$SITE --csmdata=$MYCSMDATA >& $SITE.out &
+
+# Finally configure, build, and run the case as normal
+cd ../../../../../$MYCASE
+./cesm_setup
+./$MYCASE.build
+./$MYCASE.submit (or use the $MYCASE.run script to run interactively)

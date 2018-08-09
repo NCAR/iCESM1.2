@@ -1,0 +1,5 @@
+# For pgi and pgicuda, progseasalts_intr.F90 gives a compiler error with the
+# default compilation flags on titan, when building optimized (non-debug); this
+# is fixed by specifying -Mvect=nosse
+progseasalts_intr.o: progseasalts_intr.F90
+	$(FC) -c $(INCLDIR) $(INCS) $(FFLAGS) $(FREEFLAGS) -Mvect=nosse $<

@@ -1,0 +1,28 @@
+#! /bin/tcsh
+
+# -------------------------------------------------------------------------
+# Laramie build specific settings
+# -------------------------------------------------------------------------
+
+source  /etc/profile.d/modules.csh
+
+module purge
+
+module load intel/17.0.1
+module load ncarenv/1.0
+module load mkl
+module load ncarcompilers/0.3.5
+module load mpt/2.15
+if( $MPILIB == "mpi-serial" ) then
+  module load netcdf/4.4.1.1
+else
+  module load netcdf-mpi/4.4.1.1
+  module load pnetcdf/1.8.0
+endif
+# -------------------------------------------------------------------------
+# Build and runtime environment variables - edit before the initial build
+# -------------------------------------------------------------------------
+
+setenv OMP_STACKSIZE 256M
+setenv NETCDF_PATH $NETCDF
+setenv PNETCDF_PATH $PNETCDF
