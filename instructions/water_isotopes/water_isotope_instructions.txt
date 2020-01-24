@@ -1,0 +1,31 @@
+How to setup a CESM simulation with water isotopes:
+
+1.  Create new case (i.e. run iCESM1.2/scripts/create_newcase).       
+
+2.  Add "-water_tracer h2o_h216o_hdo_h218o" to CAM_CONFIG_OPTS in env_build.xml
+
+3.  If running with prognostic ocean, then also add "wiso" to OCN_TRACER_MODULES in env_build.xml
+
+4.  Run cesm_setup
+
+5.  Add the line:
+
+    finidat = '<yourpath>/<isotopic_clm4_IC_file>'
+
+    to user_nl_clm, where <yourpath> is the path to wherever an isotopic iCLM4 initial conditions netCDF file is kept.  Please note that
+    this file is resolution and time-period dependent, so if a particular file doesn't work for your simulation then you will need to generate 
+    a new one.  This can be done using the "iclm4_IC_create.ncl" script, which will generate an isotopic copy of a standard "finidat" file.
+    Please note that the NCL script requires two netCDF files, which should be included in this tarball (d180.2x2.ltm.nc and hdo.2x2.ltm.nc). 
+
+6.  Add the line "tr_iso = .true." to user_nl_cice.
+
+7.  Add the line "wiso_runoff = .true." to user_nl_rtm.
+
+8.  Add whatever else you would like to the model.
+
+9.  Build the model (run *.build script).
+
+10.  Run the model (use *.run or *.submit script).
+
+11.  Cross your fingers and hope it works!
+
