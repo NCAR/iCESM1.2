@@ -1,35 +1,22 @@
 
-       The Community Climate System Model version 4.0 (CCSM4.0)
-
-                     http://www.ccsm.ucar.edu
-
-       See the CCSM web site for documentation and information.
+       The isotope-enabled Community Earth System Model version 1.2 (iCESM1.2)
 
 
-For commits to the ccsm svn repo
+iCESM1.2 is a version of NCAR's CESM1.2 with the ability to simulate water isotopes
+(HDO and H218O) through the entire modeled hydrologic cycle, along with the ability to simulate
+multiple different water tracers in the atmosphere (CAM5).  Instructions for running the model
+with water isotopes or water tracers can be found in the "instructions" directory included in this
+repository. Also, a scientific description of the model itself can be found online here:
 
-1) check out the latest ccsm4 tag but do not populate external directories
-> svn co --ignore-externals $SVNREPO/ccsm4/tags/ccsm4_0_alpha## my_sandbox
-> svn co -N $SVNREPO/ccsm4/tags/ccsm4_0_alpha## my_sandbox
+https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2019MS001663
 
-2) modify the file SVN_EXTERNAL_DIRECTORIES with any changes to
-component tags
-> cd  my_sandbox
-> emacs SVN_EXTERNAL_DIRECTORIES
+Finally, if you have any questions or concerns regarding this model then please add a post to the
+CESM forums:
 
-3) set the property for the external definitions - don't forget the dot at the end
-> svn propset  svn:externals  -F SVN_EXTERNAL_DIRECTORIES .
+https://xenforo.cgd.ucar.edu/cesm/
 
-4) populate your sandbox with the external files
-> svn update
+and an NCAR scientist or engineer will respond to your query promptly.
 
-5) test
+Good luck!
 
-6) document your mods
-> cp  ChangeLog_template  ChangeLog.new
-> cat  ChangeLog  >>  ChangeLog.new
-> emacs  ChangeLog.new
-> mv ChangeLog.new  ChangeLog
 
-7) copy your sandbox to a new tag in the repository
-> svn copy . $SVNREPO/ccsm4/tags/ccsm4_0_alpha## -m "created tag ccsm4_0_alpha##"
