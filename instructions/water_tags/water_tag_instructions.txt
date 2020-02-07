@@ -1,33 +1,33 @@
 Steps for setting up a water tracer simulation in iCESM1.2:
 
-1.  First, turn on water isotopes by following the instructions listed
-    in "model_instructions.txt" present in the "water_isotope_files" tarball.
+1.  First, turn on water isotopes by following the instructions listed in
+    "water_isotope_instructions.txt" present in the "water_isotopes" instructions directory.
     However, do not build the model until the water tracer additions below have
     also been added.
 
-2.  Next, copy the "atm_comp_mct.F90" file into your SourceMods/src.cam directory.  
+2.  Next, copy the example "atm_comp_mct.F90" file into your SourceMods/src.cam directory.
     This file is where the actual water tracer boundaries are specified, and will
     thus need to be modified for any additional water tracers.  These additions are
     located in the "atm_import_mct" subroutine, in the "wtrc_nsrfvap" do-loop.
 
-3.  Then, copy the "cam.buildnml.csh" file into your SourceMods/src.cam directory. If any
+3.  Then, copy the example "cam.buildnml.csh" file into your SourceMods/src.cam directory. If any
     additional water tracers are added to the run then search for this line of code:
 
     sed 's/DPCNST=50/DPCNST=71/g' < CCSM_cppdefs > CCSM_cppdefs_tmp
 
     and increase the second number by 7 for every new water tracer added.
 
-4.  Finally, copy the "user_nl_cam" file into your case directory (or add the contents to your
+4.  Finally, copy the example "user_nl_cam" file into your case directory (or add the contents to your
     user_nl_cam file if you have already modified it).  For every new water tracer that is added,
     you will need to add the tracer names similar to the example "LND" and "NPAC" tracers already provided
-    to the relevant namelist variables.  You will also need to add an additional 7 "H2O" quantities to the 
+    to the relevant namelist variables.  You will also need to add an additional 7 "H2O" quantities to the
     "wtrc_species_names" variable, and an additional series of "VAPOR, LIQUID, ICE, etc." to the "wtrc_type_names" variable.
 
 5.  Build the model (run *.build script in case directory).
 
 6.  Run the model  (use either the *.run or *.submit script in case directory).
 
-7.  Once the model is finished running, you should find variables with the same names you provided in user_nl_cam 
+7.  Once the model is finished running, you should find variables with the same names you provided in user_nl_cam
     in the history files that contain the associated water mass quantities for your water tracer.
 
 Good luck!
