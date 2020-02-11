@@ -1,7 +1,7 @@
 ;iclm4_IC_create.ncl
 ;
 ;Goal:  To create an isotopic Initial Conditions (IC) file for iCLM4.  The file is needed not only to allow the model to run
-;properly, but it can also grealy help the spin-up of deep snow pack and soil water.
+;properly, but it can also greatly help the spin-up of deep snow pack and soil water.
 ;
 ;Written by:  Jesse Nusbaumer <nusbaume@colorado.edu> - June, 2014.
 ;
@@ -20,8 +20,8 @@ begin
 Rstd = 1.0  ;Standard ratio used to convert from delta values to water masses.
 
 ;isotope delta values:
-ifilo = "/glade/p/work/nusbaume/isotope_obs/GNIP/d18o.2x2.ltm.nc"
-ifild = "/glade/p/work/nusbaume/isotope_obs/GNIP/hdo.2x2.ltm.nc"
+ifilo = "./d18o.2x2.ltm.nc"
+ifild = "./hdo.2x2.ltm.nc"
 
 ;CLM4 IC file:
 
@@ -29,10 +29,10 @@ ifild = "/glade/p/work/nusbaume/isotope_obs/GNIP/hdo.2x2.ltm.nc"
 cdir = "/glade/p/work/nusbaume/inputdata/clm4/"
 
 ;0.5x.0.5:
-cfil = "clmi.BCN.2000-01-01_0.47x0.63_gx1v6_simyr2000_c121030.nc"
+;cfil = "clmi.BCN.2000-01-01_0.47x0.63_gx1v6_simyr2000_c121030.nc"
 
 ;1x1:
-;cfil = "clmi.BCN.2000-01-01_0.9x1.25_gx1v6_simyr2000_c100303.nc"
+cfil = "clmi.BCN.2000-01-01_0.9x1.25_gx1v6_simyr2000_c100303.nc"
 
 ;2x2:
 ;cfil = "clmi.BCN.2000-01-01_1.9x2.5_gx1v6_simyr2000_c100309.nc"
@@ -48,6 +48,9 @@ cfil = "clmi.BCN.2000-01-01_0.47x0.63_gx1v6_simyr2000_c121030.nc"
 
 ;2x2 - 850:
 ;cfil = "b.e11.B1850C5CN.f19_g16.0850cntl.001.clm2.r.0850-01-01-00000.nc"
+
+;file output directory (location where you want new IC file written):
+odir = "./"
 
 ;********************
 ;Read in CLM4 IC file
@@ -73,7 +76,7 @@ lonp = cin->pfts1d_lon ;longitudes per pft
 ;**************************************
 
 oin = addfile(ifilo,"r") ;open netCDF files
-din = addfile(ifild,"r") 
+din = addfile(ifild,"r")
 
 d18o = oin->d18o         ;read in variables
 dDo  = din->hdo
@@ -117,7 +120,7 @@ print(min(R18))
 ;Find closest column/pft locations
 ;*********************************
 
-;NOTE: Using the nearest coordinate method may result 
+;NOTE: Using the nearest coordinate method may result
 ;in the loss of data, given that an individual point
 ;is used to represent the grid cell, instead of an
 ;interpolated average.  However, for now this is probably
@@ -309,8 +312,8 @@ do c = 0,dimsizes(h2osno)-1 ;loop over columns
   wt_hdo(c) = wt(c)*RD(ilat_col(c),ilon_col(c))
 
   ;GNIP ratios:
-  Rgnip_o18(c) = R18(ilat_col(c),ilon_col(c))
-  Rgnip_hdo(c) = RD(ilat_col(c),ilon_col(c)) 
+  Rgnip_o18(c) = (/ R18(ilat_col(c),ilon_col(c)) /)
+  Rgnip_hdo(c) = (/ RD(ilat_col(c),ilon_col(c)) /)
 
   ;2-D variables:
   
@@ -333,64 +336,64 @@ do p = 0,dimsizes(h2ocan)-1 ;loop over PFTs
   h2ocan_hdo(p) = h2ocan(p)*RD(ilat_pft(p),ilon_pft(p))
 
   ;Canopy isotopic vapor ratio:
-  Rcan_o18(p)   = R18(ilat_pft(p),ilon_pft(p))
-  Rcan_hdo(p)   = RD(ilat_pft(p),ilon_pft(p))
+  Rcan_o18(p)   = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rcan_hdo(p)   = (/ RD(ilat_pft(p),ilon_pft(p))  /)
 
   ;Sun isotopic leaf water ratio:
-  Rsun_o18(p)   = R18(ilat_pft(p),ilon_pft(p))
-  Rsun_hdo(p)   = RD(ilat_pft(p),ilon_pft(p))
+  Rsun_o18(p)   = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rsun_hdo(p)   = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;Shade isotopic leaf water ratio:
-  Rsha_o18(p)   = R18(ilat_pft(p),ilon_pft(p))
-  Rsha_hdo(p)   = RD(ilat_pft(p),ilon_pft(p))
+  Rsha_o18(p)   = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rsha_hdo(p)   = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;Isotopic ratio of sun leaf produced cellulose:
-  Rsncl_o18(p)  = R18(ilat_pft(p),ilon_pft(p))
-  Rsncl_hdo(p)  = RD(ilat_pft(p),ilon_pft(p))
+  Rsncl_o18(p)  = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rsncl_hdo(p)  = (/ RD(ilat_pft(p),ilon_pft(p))  /)
 
   ;Isotopic ratio of shade leaf produced cellulose:
-  Rshcl_o18(p)  = R18(ilat_pft(p),ilon_pft(p))
-  Rshcl_hdo(p)  = RD(ilat_pft(p),ilon_pft(p)) 
+  Rshcl_o18(p)  = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rshcl_hdo(p)  = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;Isotopic ratio of sun cellulose * photosynthesis:
-  Rsnclp_o18(p) = R18(ilat_pft(p),ilon_pft(p))
-  Rsnclp_hdo(p) = RD(ilat_pft(p),ilon_pft(p))
+  Rsnclp_o18(p) = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rsnclp_hdo(p) = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;Isotopic ratio of shade cellulose * photosynthesis:
-  Rshclp_o18(p) = R18(ilat_pft(p),ilon_pft(p))
-  Rshclp_hdo(p) = RD(ilat_pft(p),ilon_pft(p))
+  Rshclp_o18(p) = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rshclp_hdo(p) = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;Peclet effect - included sunlit leaf ratios (diagnostic only):
-  Rsndg_o18(p)  = R18(ilat_pft(p),ilon_pft(p))
-  Rsndg_hdo(p)  = RD(ilat_pft(p),ilon_pft(p))
+  Rsndg_o18(p)  = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rsndg_hdo(p)  = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;Peclet effect - included shaded leaf ratios (diagnostic only):
-  Rshdg_o18(p)  = R18(ilat_pft(p),ilon_pft(p))
-  Rshdg_hdo(p)  = RD(ilat_pft(p),ilon_pft(p))   
+  Rshdg_o18(p)  = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rshdg_hdo(p)  = (/ RD(ilat_pft(p),ilon_pft(p))  /)
 
   ;steady-state sunlit leaf ratios:
-  Rsnss_o18(p)  = R18(ilat_pft(p),ilon_pft(p))
-  Rsnss_hdo(p)  = RD(ilat_pft(p),ilon_pft(p))
+  Rsnss_o18(p)  = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rsnss_hdo(p)  = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;steady-state shaded leaf ratios:
-  Rshss_o18(p)  = R18(ilat_pft(p),ilon_pft(p))
-  Rshss_hdo(p)  = RD(ilat_pft(p),ilon_pft(p))
+  Rshss_o18(p)  = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rshss_hdo(p)  = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;steady-state sunlit leaf ratios * photosynthesis:
-  Rsnssp_o18(p)  = R18(ilat_pft(p),ilon_pft(p))
-  Rsnssp_hdo(p)  = RD(ilat_pft(p),ilon_pft(p))
+  Rsnssp_o18(p)  = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rsnssp_hdo(p)  = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;steady-state shaded leaf ratios * photosynthesis:
-  Rshssp_o18(p)  = R18(ilat_pft(p),ilon_pft(p))
-  Rshssp_hdo(p)  = RD(ilat_pft(p),ilon_pft(p))
+  Rshssp_o18(p)  = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rshssp_hdo(p)  = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;Isotopic ratio of Xylem water:
-  Rxym_o18(p)   = R18(ilat_pft(p),ilon_pft(p))
-  Rxym_hdo(p)   = RD(ilat_pft(p),ilon_pft(p))
+  Rxym_o18(p)   = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rxym_hdo(p)   = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
   ;Isotopic canopy liquid water ratio:
-  Rcnwt_o18(p)  = R18(ilat_pft(p),ilon_pft(p))
-  Rcnwt_hdo(p)  = RD(ilat_pft(p),ilon_pft(p))
+  Rcnwt_o18(p)  = (/ R18(ilat_pft(p),ilon_pft(p)) /)
+  Rcnwt_hdo(p)  = (/ RD(ilat_pft(p),ilon_pft(p)) /)
 
 end do
 
@@ -534,7 +537,7 @@ Rgnip_h2o@units      = "unitless"
 Rgnip_o18@long_name  = "H218O GNIP isotope ratio"
 Rgnip_o18@units      = "unitless"
 Rgnip_hdo@long_name  = "HDO GNIP isotope ratio"
-Rgnip_hdo@units      = "unitless"  
+Rgnip_hdo@units      = "unitless"
 
 h2ocan_h2o@long_name = "H2OTR canopy water"
 h2ocan_h2o@units     = "kg/m2"
@@ -669,11 +672,9 @@ h2oice_hdo@units     = "kg/m2"
 ;********************
 
 ;temporary file:
-tfil = "/glade/p/work/nusbaume/iso_clm4_IC.nc"
+tfil = "./iso_clm4_IC.nc"
 
-system("rm -f "+tfil)      ;remove old file
-
-out = addfile("/glade/p/work/nusbaume/iso_clm4_IC.nc","c") ;create new netCDF file
+out = addfile(tfil,"c") ;create new netCDF file
 
 ;Snow water:
 out->H2OSNO_H2OTR = h2osno_h2o
@@ -789,9 +790,6 @@ out->Rcanopywater_H218O = Rcnwt_o18
 ;Combine netCDF files together
 ;*****************************
 
-;file output directory:
-odir = "/glade/p/work/nusbaume/inputdata/isotopic_inputdata/clm4/GNIP_based/"
-
 ;Copy over base CLM4 file:
 system("cp "+cdir+cfil+" "+odir+cfil)
 
@@ -800,6 +798,9 @@ system("chmod u+w "+odir+cfil)
 
 ;Add isotopic variables to file:
 system("ncks -A "+tfil+" "+odir+cfil)
+
+;Remove temporary file:
+system("rm -f "+tfil)
 
 ;***********
 ;End program
