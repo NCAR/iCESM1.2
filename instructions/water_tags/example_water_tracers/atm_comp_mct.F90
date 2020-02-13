@@ -746,7 +746,7 @@ CONTAINS
     !water isotopes:
     real(r8) :: R  !water tracer ratio
 
-   real(r8)           :: wtlat
+    real(r8)           :: wtlat
     real(r8)           :: wtlon
     real(r8), parameter:: radtodeg = 180.0_r8/SHR_CONST_PI
 
