@@ -9,12 +9,6 @@
 !Water tags:
  wtrc_names             = 'H2OV', 'H2OL', 'H2OI', 'H2OR', 'H2OS', 'H2Or', 'H2Os', 'H216OV', 'H216OL', 'H216OI','H216OR','H216OS','H216Or',
    'H216Os','HDOV','HDOL', 'HDOI', 'HDOR', 'HDOS', 'HDOr', 'HDOs', 'H218OV', 'H218OL', 'H218OI', 'H218OR', 'H218OS', 'H218Or', 'H218Os',
-   'LNDV', 'LNDL', 'LNDI', 'LNDR', 'LNDS', 'LNDr', 'LNDs', 'ARCV', 'ARCL', 'ARCI', 'ARCR', 'ARCS', 'ARCr', 'ARCs', 'NPAV', 'NPAL',
-   'NPAI', 'NPAR', 'NPAS', 'NPAr', 'NPAs', 'NATV', 'NATL', 'NATI', 'NATR', 'NATS', 'NATr', 'NATs', 'SNPV', 'SNPL', 'SNPI', 'SNPR',
-   'SNPS', 'SNPr', 'SNPs', 'GOMV', 'GOML', 'GOMI', 'GOMR', 'GOMS', 'GOMr', 'GOMs', 'SNAV', 'SNAL', 'SNAI', 'SNAR', 'SNAS', 'SNAr', 'SNAs',
-   'EQIV', 'EQIL', 'EQII', 'EQIR', 'EQIS', 'EQIr', 'EQIs', 'WRMV', 'WRML', 'WRMI', 'WRMR', 'WRMS', 'WRMr', 'WRMs', 'EQPV', 'EQPL', 'EQPI',
-   'EQPR', 'EQPS', 'EQPr', 'EQPs', 'SBIV', 'SBIL', 'SBII', 'SBIR', 'SBIS', 'SBIr', 'SBIs', 'SPAV', 'SPAL', 'SPAI', 'SPAR', 'SPAS', 'SPAr',
-   'SPAs', 'SATV', 'SATL', 'SATI', 'SATR', 'SATS', 'SATr', 'SATs', 'SOCNV', 'SOCNL', 'SOCNI', 'SOCNR', 'SOCNS', 'SOCNr', 'SOCNs', 
    'LNDV', 'LNDL', 'LNDI', 'LNDR', 'LNDS', 'LNDr', 'LNDs', 'NPACV', 'NPACL', 'NPACI', 'NPACR', 'NPACS', 'NPACr', 'NPACs'
 
  wtrc_species_names             = 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H216O', 'H216O', 'H216O', 'H216O', 'H216O', 'H216O',

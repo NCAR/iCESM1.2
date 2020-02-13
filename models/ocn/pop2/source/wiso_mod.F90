@@ -1855,8 +1855,8 @@ character(*), parameter :: sub_name = 'wiso_mod:wiso_init'
    WISO_SFLUX_18O(:,:,:) = WISO_SFLUX_18O(:,:,:) - avg_18O_F + avg_16O_F
    WISO_SFLUX_HDO(:,:,:) = WISO_SFLUX_HDO(:,:,:) - avg_HDO_F + avg_16O_F
 
-   WISO_SFLUX_TAVG(:,:,37,:) = (WISO_SFLUX_18O - WISO_SFLUX_16O) * fwmass_to_fwflux
-   WISO_SFLUX_TAVG(:,:,38,:) = (WISO_SFLUX_HDO - WISO_SFLUX_16O) * fwmass_to_fwflux
+   WISO_SFLUX_TAVG(:,:,37,:) = (WISO_SFLUX_18O - WISO_SFLUX_16O) * fwmass_to_fwflux * c1000
+   WISO_SFLUX_TAVG(:,:,38,:) = (WISO_SFLUX_HDO - WISO_SFLUX_16O) * fwmass_to_fwflux * c1000
 
 !-----------------------------------------------------------------------
 !  do marginal sea balancing before setting the STF array

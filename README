@@ -4,11 +4,21 @@
 
 iCESM1.2 is a version of NCAR's CESM1.2 with the ability to simulate water isotopes
 (HDO and H218O) through the entire modeled hydrologic cycle, along with the ability to simulate
-multiple different water tracers in the atmosphere (CAM5).  Instructions for running the model
-with water isotopes or water tracers can be found in the "instructions" directory included in this
-repository. Also, a scientific description of the model itself can be found online here:
+multiple different water tracers in the atmosphere (CAM5).  Please note that this version MUST
+run with water isotopes.  If you want a standard version of CESM1.2 then please find instructions
+for acquiring the non-isotopic CESM1.2 model online here:
+
+http://www.cesm.ucar.edu/models/cesm1.2/
+
+If you are interested in water isotopes or water tracers, then instructions for running iCESM1.2 with
+those tracers can be found in the "instructions" directory included in this repository. Along with those
+instructions, a scientific description of iCESM1.2 itself can be found online here:
 
 https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2019MS001663
+
+or here:
+
+https://doi.org/10.1029/2019MS001663
 
 Finally, if you have any questions or concerns regarding this model then please add a post to the
 CESM forums:

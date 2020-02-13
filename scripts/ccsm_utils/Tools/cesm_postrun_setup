@@ -44,7 +44,7 @@ cd $CASEROOT
 if ($DOUT_S == 'TRUE') then
   echo "Archiving cesm output to $DOUT_S_ROOT"
   echo "Calling the short-term archiving script st_archive.sh"
-  cd $RUNDIR; $CASETOOLS/st_archive.sh
+  cd $RUNDIR; $CASETOOLS/st_archive.sh; cd $CASEROOT
 endif
 
 # -------------------------------------------------------------------------
