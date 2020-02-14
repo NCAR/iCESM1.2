@@ -68,6 +68,9 @@ Chemistry package: waccm_mozart, waccm_mozart_mam3, waccm_mozart_sulfur, waccm_g
 <entry id="water_tracer" valid_values="none,h2o,h2o_hdo,h2o_h218o,h2o_hdo_h218o,h2o_h216o_hdo_h218o" value="">
 Water tracer (isotope or tag) package: none, h2o, h2o_hdo, h2o_h218o, h2o_hdo_h218o.
 </entry>
+<entry id="water_tag_num" value="0">
+Number of water tags for this simulation.
+</entry>
 <entry id="prog_species" valid_values="DST,SSLT,SO4,GHG,OC,BC,CARBON16" value="" list="1">
 Prognostic mozart species packages: list of any subset of the following: DST,SSLT,SO4,GHG,OC,BC,CARBON16
 </entry>

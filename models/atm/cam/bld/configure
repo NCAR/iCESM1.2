@@ -125,6 +125,7 @@ OPTIONS
      -water_tracer <name> Build CAM with specified water tracer (isotope or tag) package
                         [ none | h2o | h2o_hdo | h2o_h218o | h2o_hdo_h218o |
                           h2o_h216o_hdo_h218o ].  Default: none
+     -water_tag_num <n> Number of water tags that will be simulated in this CAM build.
      -co2_cycle         This option is meant to be used with the -ccsm_seq option.  It modifies the
                         CAM configuration by increasing the number of advected constituents by 4.
      -comp_intf         Specify the component interfaces [mct | esmf] (default: mct).
@@ -326,6 +327,7 @@ GetOptions(
     "hgrid=s"                   => \$opts{'hgrid'},
     "ice=s"                     => \$opts{'ice'},
     "water_tracer=s"            => \$opts{'water_tracer'},
+    "water_tag_num=s"           => \$opts{'water_tag_num'},
     "lapack_libdir=s"           => \$opts{'lapack_libdir'},
     "ldflags=s"                 => \$opts{'ldflags'},
     "linker=s"                  => \$opts{'linker'},
@@ -768,6 +770,27 @@ if (defined $opts{'water_tracer'}) {
 }
 
 $cfg_ref->set('water_tracer', $water_tracer_pkg);
+
+#----------------------------------------------------------------------------------------------
+# Water tags
+
+# Allow the user to override the default number of water tags via the commandline:
+if (defined $opts{'water_tag_num'}) {
+    $cfg_ref->set('water_tag_num', $opts{'water_tag_num'});
+}
+
+#Pull out water_tag_num variable from configure object:
+my  $tags_water = $cfg_ref->get('water_tag_num');
+
+#Print number of water tags to file/screen:
+if ($print>=2) { print "Number of user requested water tags: $tags_water$eol"; }
+
+#Kill configuration if water tracers are off but water tags are on:
+if (($water_tracer_pkg eq 'none') and (defined $opts{'water_tag_num'})) {
+    die <<"EOF";
+** ERROR:  Water tags have been specified, but without a water tracer model (-water_tracer).
+EOF
+}
 
 #-----------------------------------------------------------------------------------------------
 # Test tracer package
@@ -1373,6 +1396,12 @@ if ($water_tracer_pkg ne 'none') {
     if ($microphys_pkg =~ /^mg/ or $microphys_pkg eq 'rk') {
         $water_tracer_nadv += 4;
     }
+
+    # Add water tags to tracer number:
+    if(defined $opts{'water_tag_num'}) {
+        $water_tracer_nadv += $tags_water*7;
+    }
+
 }
 
 my $carma_nadv = 0;
