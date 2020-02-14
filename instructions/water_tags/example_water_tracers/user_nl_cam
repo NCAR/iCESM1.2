@@ -16,8 +16,7 @@
     'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O', 'H2O'
 
  wtrc_srfpcp_names              = 'H2OR', 'H2Or', 'H2OS', 'H2Os', 'H216OR', 'H216OS', 'H216Or', 'H216Os', 'HDOR', 'HDOr', 'HDOS', 'HDOs',
-    'H218OR', 'H218Or', 'H218OS', 'H218Os', 'LNDR', 'LNDr', 'LNDS', 'LNDs', 'NPAR', 'NPAS', 'NPAr', 'NPAs',
-    'LNDR', 'LNDS', 'LNDr', 'LNDs', 'NPACR', 'NPACS', 'NPACr', 'NPACs'
+    'H218OR', 'H218Or', 'H218OS', 'H218Os', 'LNDR', 'LNDS', 'LNDr', 'LNDs', 'NPACR', 'NPACS', 'NPACr', 'NPACs'
 
  wtrc_srfvap_names              = 'H2OV', 'H216OV', 'HDOV','H218OV', 'LNDV', 'NPACV'
 
